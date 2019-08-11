@@ -1,6 +1,6 @@
 import { h } from "preact"
 import FormField from "./FormField"
-import { getRolls } from "./rollSimulation"
+import { getRolls, ScenarioResult } from "./rollSimulation"
 import useForm from "./useForm"
 import useNumberInput from "./useNumberInput"
 
@@ -14,8 +14,20 @@ export default function App() {
 
   const rolls = getRolls(values)
 
+  const formatResultChance = (result: ScenarioResult) => {
+    const percent = Math.round(result.survivalChance * 100)
+    const fraction = `(${result.survivals} / ${result.rolls.length})`
+    return `${percent}% ${fraction}`
+  }
+
+  const chanceColor = (chance: number) => {
+    if (chance > 0.5) return "green"
+    if (chance > 0.25) return "orange"
+    return "red"
+  }
+
   return (
-    <main>
+    <main style={{ fontFamily: "Roboto, sans-serif" }}>
       <FormField
         label="Attacker +ATK"
         type="number"
@@ -36,6 +48,15 @@ export default function App() {
         type="number"
         {...fields.defenderEvade.bind}
       />
+
+      <p>
+        <div style={{ color: chanceColor(rolls.defense.survivalChance) }}>
+          Defense survival: {formatResultChance(rolls.defense)}
+        </div>
+        <div style={{ color: chanceColor(rolls.evade.survivalChance) }}>
+          Evade survival: {formatResultChance(rolls.evade)}
+        </div>
+      </p>
 
       <pre>{JSON.stringify(rolls, null, 2)}</pre>
     </main>
