@@ -1,7 +1,13 @@
-type Roll = {
+export type Roll = {
   attackerRoll: number
   defenderRoll: number
   healthRemaining: number
+}
+
+export type ScenarioResult = {
+  survivals: number
+  survivalChance: number
+  rolls: Roll[]
 }
 
 export function getRolls(values: {
@@ -45,5 +51,16 @@ export function getRolls(values: {
     }
   }
 
-  return { defenseSurvivals, evadeSurvivals, defenseRolls, evadeRolls }
+  return {
+    defense: {
+      survivals: defenseSurvivals,
+      survivalChance: defenseSurvivals / defenseRolls.length,
+      rolls: defenseRolls,
+    },
+    evade: {
+      survivals: evadeSurvivals,
+      survivalChance: evadeSurvivals / evadeRolls.length,
+      rolls: evadeRolls,
+    },
+  }
 }
