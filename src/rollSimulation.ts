@@ -51,16 +51,17 @@ export function getRolls(values: {
     }
   }
 
-  return {
-    defense: {
-      survivals: defenseSurvivals,
-      survivalChance: defenseSurvivals / defenseRolls.length,
-      rolls: defenseRolls,
-    },
-    evade: {
-      survivals: evadeSurvivals,
-      survivalChance: evadeSurvivals / evadeRolls.length,
-      rolls: evadeRolls,
-    },
+  const defense: ScenarioResult = {
+    survivals: defenseSurvivals,
+    survivalChance: defenseSurvivals / defenseRolls.length,
+    rolls: defenseRolls,
   }
+
+  const evade: ScenarioResult = {
+    survivals: evadeSurvivals,
+    survivalChance: evadeSurvivals / evadeRolls.length,
+    rolls: evadeRolls,
+  }
+
+  return { defense, evade }
 }
