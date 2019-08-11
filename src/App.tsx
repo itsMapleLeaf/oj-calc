@@ -7,9 +7,11 @@ import useNumberInput from "./useNumberInput"
 export default function App() {
   const { fields, values } = useForm({
     attackerAttack: useNumberInput(),
+    attackerDiceCount: useNumberInput(1),
     defenderHealth: useNumberInput(5),
     defenderDefense: useNumberInput(),
     defenderEvade: useNumberInput(),
+    defenderDiceCount: useNumberInput(1),
   })
 
   const rolls = getRolls(values)
@@ -27,19 +29,25 @@ export default function App() {
   }
 
   return (
-    <main style={{ fontFamily: "Roboto, sans-serif" }}>
-      <fieldset>
+    <main style={{ fontFamily: "Roboto, sans-serif", margin: "1rem" }}>
+      <p>
         <FormField
           label="Attacker +ATK"
           type="number"
           {...fields.attackerAttack.bind}
         />
-      </fieldset>
+        <FormField
+          label="Attacker Dice"
+          type="number"
+          {...fields.attackerDiceCount.bind}
+        />
+      </p>
 
-      <fieldset>
+      <p>
         <FormField
           label="Defender HP"
           type="number"
+          min={1}
           {...fields.defenderHealth.bind}
         />
         <FormField
@@ -52,7 +60,12 @@ export default function App() {
           type="number"
           {...fields.defenderEvade.bind}
         />
-      </fieldset>
+        <FormField
+          label="Defender Dice"
+          type="number"
+          {...fields.defenderDiceCount.bind}
+        />
+      </p>
 
       <p>
         <div style={{ color: chanceColor(rolls.defense.survivalChance) }}>
@@ -62,8 +75,6 @@ export default function App() {
           Evade survival: {formatResultChance(rolls.evade)}
         </div>
       </p>
-
-      <pre>{JSON.stringify(rolls, null, 2)}</pre>
     </main>
   )
 }

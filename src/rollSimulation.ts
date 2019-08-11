@@ -10,11 +10,26 @@ export type ScenarioResult = {
   rolls: Roll[]
 }
 
+function getPossibleDiceRolls(diceCount: number) {
+  if (diceCount === 0) return []
+  if (diceCount === 1) return [1, 2, 3, 4, 5, 6]
+
+  const rolls: number[] = []
+  for (let i = 1; i <= 6; i++) {
+    for (const lowerRoll of getPossibleDiceRolls(diceCount - 1)) {
+      rolls.push(i + lowerRoll)
+    }
+  }
+  return rolls
+}
+
 export function getRolls(values: {
   attackerAttack: number
+  attackerDiceCount: number
   defenderHealth: number
   defenderDefense: number
   defenderEvade: number
+  defenderDiceCount: number
 }) {
   const defenseRolls: Roll[] = []
   const evadeRolls: Roll[] = []
@@ -22,8 +37,8 @@ export function getRolls(values: {
   let defenseSurvivals = 0
   let evadeSurvivals = 0
 
-  for (let attackerRoll = 1; attackerRoll <= 6; attackerRoll++) {
-    for (let defenderRoll = 1; defenderRoll <= 6; defenderRoll++) {
+  for (const attackerRoll of getPossibleDiceRolls(values.attackerDiceCount)) {
+    for (const defenderRoll of getPossibleDiceRolls(values.defenderDiceCount)) {
       const buffedAttack = attackerRoll + values.attackerAttack
       const buffedDefense = defenderRoll + values.defenderDefense
       const buffedEvade = defenderRoll + values.defenderEvade
