@@ -39,6 +39,7 @@ export default function App() {
         <FormField
           label="Attacker Dice"
           type="number"
+          min={1}
           {...fields.attackerDiceCount.bind}
         />
       </p>
@@ -63,6 +64,7 @@ export default function App() {
         <FormField
           label="Defender Dice"
           type="number"
+          min={1}
           {...fields.defenderDiceCount.bind}
         />
       </p>
