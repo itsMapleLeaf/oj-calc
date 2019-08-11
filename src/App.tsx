@@ -28,26 +28,31 @@ export default function App() {
 
   return (
     <main style={{ fontFamily: "Roboto, sans-serif" }}>
-      <FormField
-        label="Attacker +ATK"
-        type="number"
-        {...fields.attackerAttack.bind}
-      />
-      <FormField
-        label="Defender HP"
-        type="number"
-        {...fields.defenderHealth.bind}
-      />
-      <FormField
-        label="Defender +DEF"
-        type="number"
-        {...fields.defenderDefense.bind}
-      />
-      <FormField
-        label="Defender +EVD"
-        type="number"
-        {...fields.defenderEvade.bind}
-      />
+      <fieldset>
+        <FormField
+          label="Attacker +ATK"
+          type="number"
+          {...fields.attackerAttack.bind}
+        />
+      </fieldset>
+
+      <fieldset>
+        <FormField
+          label="Defender HP"
+          type="number"
+          {...fields.defenderHealth.bind}
+        />
+        <FormField
+          label="Defender +DEF"
+          type="number"
+          {...fields.defenderDefense.bind}
+        />
+        <FormField
+          label="Defender +EVD"
+          type="number"
+          {...fields.defenderEvade.bind}
+        />
+      </fieldset>
 
       <p>
         <div style={{ color: chanceColor(rolls.defense.survivalChance) }}>
