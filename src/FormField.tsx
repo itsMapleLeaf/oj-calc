@@ -4,11 +4,10 @@ type Props = h.JSX.HTMLAttributes & {
   label: string
 }
 
-export default function FormField(props: Props) {
+export default function FormField({ label, ...inputProps }: Props) {
   return (
     <label style={{ display: "block" }}>
-      {props.label}{" "}
-      <input type={props.type} value={props.value} onChange={props.onChange} />
+      {label} <input {...inputProps} />
     </label>
   )
 }
