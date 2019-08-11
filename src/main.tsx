@@ -6,4 +6,4 @@ function App() {
   return <button onClick={() => setOn(v => !v)}>{on ? "on" : "off"}</button>
 }
 
-render(<App />, document.querySelector("#root")!)
+render(<App />, document.getElementById("root")!)
